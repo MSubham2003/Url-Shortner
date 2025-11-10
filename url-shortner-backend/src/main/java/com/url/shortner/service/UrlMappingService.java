@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +22,7 @@ public class UrlMappingService {
     private UrlMappingRepository urlMappingRepository;
     private Environment environment;
     private ClickEventRepository clickEventRepository;
+    private  Random random = new Random();
 
     public UrlMappingDto createShortUrl(String originalUrl, User user) {
         String shortUrl = generateShortUrl();
@@ -49,8 +48,7 @@ public class UrlMappingService {
     }
 
     private String generateShortUrl() {
-        int length = Integer.parseInt(environment.getProperty("urlLength"));
-        Random random = new Random();
+        int length = Integer.parseInt(Objects.requireNonNull(environment.getProperty("urlLength")));
         StringBuilder stringBuilder = new StringBuilder(length);
         String charSequences = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         for (int i = 0; i < length; i++) {
@@ -73,9 +71,9 @@ public class UrlMappingService {
                         clickEventDTO.setClickDate(entry.getKey());
                         clickEventDTO.setCount(entry.getValue());
                         return clickEventDTO;
-                    }).collect(Collectors.toList());
+                    }).toList();
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public Map<LocalDate, Long> getTotalClicksByUserAndDate(User user, LocalDate start, LocalDate end) {
@@ -85,5 +83,21 @@ public class UrlMappingService {
         return clickEvents.stream()
                 .collect(Collectors.groupingBy(click -> click.getClickDate().toLocalDate(), Collectors.counting()));
 
+    }
+
+    public UrlMapping getOriginalUrl(String shortUrl) {
+        UrlMapping urlMapping = urlMappingRepository.findByShortUrl(shortUrl);
+        if(urlMapping != null){
+            // Update click count
+            urlMapping.setClickCount(urlMapping.getClickCount() + 1);
+            urlMappingRepository.save(urlMapping);
+
+            // Record Click Event
+            ClickEvent clickEvent = new ClickEvent();
+            clickEvent.setUrlMapping(urlMapping);
+            clickEvent.setClickDate(LocalDateTime.now());
+            clickEventRepository.save(clickEvent);
+        }
+        return urlMapping;
     }
 }
