@@ -1,15 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import AboutPage from './components/AboutPage'
+import LandingPage from './components/LandingPage'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <p className='text-2xl font-bold'>URL SHORTNER FRONTEND</p>
-    </>
+    <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LandingPage/>} />
+          <Route path='/about' element={<AboutPage/>} />
+        </Routes>
+      </BrowserRouter>
   )
 }
 
