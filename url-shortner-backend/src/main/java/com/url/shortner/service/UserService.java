@@ -51,6 +51,7 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(auth);
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
         String jwt = jwtUtils.generateJwtToken(userDetails);
+        logger.info("Generated JWT is {}", jwt);
         return new JwtAuthenticationResponse(jwt);
     }
 

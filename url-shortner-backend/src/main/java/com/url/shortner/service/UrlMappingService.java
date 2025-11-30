@@ -22,7 +22,6 @@ public class UrlMappingService {
     private UrlMappingRepository urlMappingRepository;
     private Environment environment;
     private ClickEventRepository clickEventRepository;
-    private  Random random = new Random();
 
     public UrlMappingDto createShortUrl(String originalUrl, User user) {
         String shortUrl = generateShortUrl();
@@ -48,6 +47,7 @@ public class UrlMappingService {
     }
 
     private String generateShortUrl() {
+        Random random = new Random();
         int length = Integer.parseInt(Objects.requireNonNull(environment.getProperty("urlLength")));
         StringBuilder stringBuilder = new StringBuilder(length);
         String charSequences = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
