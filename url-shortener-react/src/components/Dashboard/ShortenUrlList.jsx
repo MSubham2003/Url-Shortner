@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ShortenItem from './ShortenItem'
 
 const ShortenUrlList = ({ data }) => {
@@ -10,5 +11,13 @@ const ShortenUrlList = ({ data }) => {
     </div>
   )
 }
+ShortenUrlList.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    })
+  ).isRequired,
+}
 
+// export default ShortenUrlList
 export default ShortenUrlList

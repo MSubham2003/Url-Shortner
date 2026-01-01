@@ -1,0 +1,16 @@
+SERVER_PORT=8080
+; DATABASE_URL=jdbc:mysql://localhost:3306/url_shortner
+DATABASE_URL=jdbc:postgresql://ep-shiny-king-a1ndvhsf-pooler.ap-southeast-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_WOL0ZDnVRjz6&sslmode=require&channelBinding=require
+; DATABASE_USERNAME=subham
+DATABASE_USERNAME=neondb_owner
+; DATABASE_PASSWORD=Subham@2003
+DATABASE_PASSWORD=npg_WOL0ZDnVRjz6
+DATABASE_DDL=update
+DATABASE_SHOWQUERY=true
+
+JWT_SECRET=f44736a432fef5756553eab6bfb22713c00479c87165ab08e4131d3b3a946c4f37695299bace324bd78c2c0e6f7a2b4d1a27e5e9da1a1641cd0e177061663389
+JWT_EXPIRATION_MS=172800000
+
+LOGGING_PATTERN=%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %class{36} - %X{uuId}%X{txnId} - %M:%L - %msg%n
+
+URL_LENGHT=8

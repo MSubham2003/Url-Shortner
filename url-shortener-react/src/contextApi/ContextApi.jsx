@@ -7,7 +7,7 @@ export const ContextProvider = ({ children }) => {
         ? JSON.parse(localStorage.getItem("JWT_TOKEN"))
         : null;
 
-    const [token, setToken] = useState(getToken);
+    const [token, setToken] = useState(null);
 
     const sendData = {
         token,

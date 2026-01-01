@@ -40,7 +40,7 @@ public class UrlMappingController {
         String originalUrl = request.get("originalUrl");
         User user = userService.findByUsername(principal.getName());
         UrlMappingDto urlMappingDto = urlMappingService.createShortUrl(originalUrl, user);
-        logger.info("Response returned for createShortUrl is {}", gson.toJson(urlMappingDto));
+        logger.info("Response returned for createShortUrl is {}", urlMappingDto);
         return ResponseEntity.ok(urlMappingDto);
     }
 
