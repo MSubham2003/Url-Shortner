@@ -8,7 +8,7 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 # ---------- Runtime stage (Java 21) ----------
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
@@ -31,7 +31,7 @@ ENV JAVA_OPTS="\
   -XX:TieredStopAtLevel=1 \
   -XX:+HeapDumpOnOutOfMemoryError \
   -XX:HeapDumpPath=/tmp/heapdump.hprof \
-  -Xlog:gc*,gc+heap=info \
+#  -Xlog:gc*,gc+heap=info \
   -Djava.security.egd=file:/dev/urandom \
   -Dfile.encoding=UTF-8 \
   -Djava.awt.headless=true \
